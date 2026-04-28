@@ -1,0 +1,38 @@
+# Laravel / PHP
+/src/vendor/
+/src/.env
+/src/.env.*
+!/src/.env.example
+/src/storage/*.key
+/src/bootstrap/cache/*.php
+!/src/bootstrap/cache/.gitignore
+
+# Frontend
+/src/node_modules/
+/src/public/build/
+/src/public/hot
+
+# Storage público generado
+/src/public/storage
+
+# Logs y caches
+*.log
+/src/storage/logs/*
+/src/storage/framework/cache/*
+/src/storage/framework/sessions/*
+/src/storage/framework/views/*
+
+# Composer / npm auth
+/src/auth.json
+
+# IDE / editor
+.vscode/
+.idea/
+.fleet/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Testing / cache
+/src/.phpunit.result.cache
