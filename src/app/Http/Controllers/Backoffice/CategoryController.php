@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
@@ -40,7 +41,11 @@ class CategoryController extends Controller
 
     public function edit(Category $category): View
     {
+        $excludedParentIds = $category->descendantIds();
+        $excludedParentIds[] = $category->id;
+
         $parents = Category::where('id', '!=', $category->id)
+            ->whereNotIn('id', $excludedParentIds)
             ->orderBy('name')
             ->get();
 
@@ -108,6 +113,20 @@ class CategoryController extends Controller
             $rules['parent_id'][] = Rule::notIn([$category->id]);
         }
 
-        return $request->validate($rules);
+        $data = $request->validate($rules);
+
+        if ($category && !empty($data['parent_id'])) {
+            // Una categoria no puede moverse debajo de una hija/nieta suya:
+            // eso crearia un ciclo y el arbol dejaria de tener sentido.
+            $invalidParentIds = $category->descendantIds();
+
+            if (in_array((int) $data['parent_id'], $invalidParentIds, true)) {
+                throw ValidationException::withMessages([
+                    'parent_id' => 'No puedes seleccionar una categoria descendiente como padre.',
+                ]);
+            }
+        }
+
+        return $data;
     }
 }

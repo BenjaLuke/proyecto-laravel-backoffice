@@ -7,6 +7,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class CategoryApiController extends Controller
 {
@@ -53,6 +54,12 @@ class CategoryApiController extends Controller
             'description' => ['nullable', 'string'],
             'parent_id' => ['nullable', 'integer', 'exists:categories,id', Rule::notIn([$category->id])],
         ]);
+
+        if (!empty($data['parent_id']) && in_array((int) $data['parent_id'], $category->descendantIds(), true)) {
+            throw ValidationException::withMessages([
+                'parent_id' => 'No puedes seleccionar una categoria descendiente como padre.',
+            ]);
+        }
 
         $category->update($data);
 

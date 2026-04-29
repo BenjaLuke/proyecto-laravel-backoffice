@@ -30,4 +30,25 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
+    public function descendantIds(): array
+    {
+        // Recorremos el arbol hacia abajo sin recursividad para saber que
+        // categorias no pueden usarse como padre de esta categoria.
+        $ids = [];
+        $pending = [$this->id];
+
+        while (!empty($pending)) {
+            $children = self::whereIn('parent_id', $pending)
+                ->pluck('id')
+                ->map(fn ($id) => (int) $id)
+                ->all();
+
+            $children = array_values(array_diff($children, $ids));
+            $ids = array_merge($ids, $children);
+            $pending = $children;
+        }
+
+        return $ids;
+    }
 }

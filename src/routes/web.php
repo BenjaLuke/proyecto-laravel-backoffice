@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Backoffice\StockEntryController;
 use App\Http\Controllers\Backoffice\PurchaseOrderController;
-# como quiero controlarlo todo por separado no he creado resources, y eso me obliga a importar lo siguiente
-use App\Http\Controllers\backoffice\CategoryController;
-use App\Http\Controllers\backoffice\ProductController;
-# esto es para un log global de actividad para no perder el control de los productos borrados
+// Estas rutas estan declaradas a mano porque cada seccion tiene permisos y
+// acciones propias, en vez de usar Route::resource() de forma automatica.
+use App\Http\Controllers\Backoffice\CategoryController;
+use App\Http\Controllers\Backoffice\ProductController;
+// Log global de actividad para mantener trazabilidad, incluso en productos borrados.
 use App\Http\Controllers\Backoffice\ActivityLogController;
-# esto para la creacion de usuarios
+// Gestion de usuarios y permisos internos del backoffice.
 use App\Http\Controllers\Backoffice\UserController;
-# para el control de las devoluciones
+// Flujo de devoluciones de pedidos servidos.
 use App\Http\Controllers\Backoffice\PurchaseOrderReturnController;
 
 use App\Models\Category;
@@ -261,4 +262,3 @@ Route::prefix('backoffice')->middleware('auth')->group(function () {
         ->middleware('permission:products_manage')
         ->name('stock-entries.store');
 });
-
