@@ -73,7 +73,7 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 - Corregido `served_at` para que solo tenga valor en pedidos `servido`.
 - Aniadida migracion correctiva para bases ya migradas.
 - Ajustado factory de pedidos.
-- Aniadido test para pedidos API pendientes sin fecha de servicio.
+- Añadido test para pedidos API pendientes sin fecha de servicio.
 
 ### b00e616 - documenta configuracion y flujos sensibles
 
@@ -86,7 +86,7 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 - API de pedidos alineada con estados y movimientos de stock.
 - Recurso de pedidos ampliado con `status` y `served_at`.
 - Arreglado log de productos al subir una imagen nueva como principal.
-- Aniadidos tests de regresion.
+- Añadidos tests de regresión.
 
 ### 302d590 - actualiza logo
 
@@ -96,6 +96,6 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 Cuando se haga una mejora nueva:
 
-1. Crear un commit pequeno y descriptivo.
-2. Aniadir o actualizar tests si el cambio toca comportamiento.
-3. Aniadir una entrada nueva arriba del historial de cambios de este README.
+1. Crear un commit pequeño y descriptivo.
+2. Añadir o actualizar tests si el cambio toca comportamiento.
+3. Añadir una entrada nueva arriba del historial de cambios de este README.
