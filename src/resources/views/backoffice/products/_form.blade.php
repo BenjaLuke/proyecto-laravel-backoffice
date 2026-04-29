@@ -235,7 +235,11 @@
     </div>
 </div>
 
-<div id="new-images-preview" class="row g-3 mb-4"></div>
+<div
+    id="new-images-preview"
+    class="row g-3 mb-4"
+    data-old-primary-image-source="{{ old('primary_image_source') }}"
+></div>
 
 @if(!empty($existingImages) && count($existingImages))
     <div class="mb-4">
@@ -270,7 +274,7 @@
                                     min="1"
                                     name="existing_images[{{ $image->id }}][sort_order]"
                                     class="form-control"
-                                    value="{{ old("existing_images.{$image->id}.sort_order", $image->sort_order) }}"
+                                    value="{{ old('existing_images.' . $image->id . '.sort_order', $image->sort_order) }}"
                                 >
                             </div>
 
@@ -378,7 +382,7 @@
 
         const imagesInput = document.getElementById('images');
         const previewContainer = document.getElementById('new-images-preview');
-        const oldPrimaryImageSource = @json(old('primary_image_source'));
+        const oldPrimaryImageSource = previewContainer.dataset.oldPrimaryImageSource || null;
 
         function renderImagePreviews() {
             previewContainer.innerHTML = '';

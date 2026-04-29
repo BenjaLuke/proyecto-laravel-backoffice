@@ -48,12 +48,18 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 ## Historial de cambios documentados
 
+### ????????? - seed y desavenenciasa VSC/laravel
+
+- Hacemos un seed forzado para que todos los productos tengan su stock y stock mínimo
+- Arreglamos desavenencias en VSC que laravel entendía pero que VSC me gritaba.
+
 ### Pendiente - corrige tabla de productos y renueva imagenes locales
 
 - Corregida la tabla de productos para que las columnas coincidan con la cabecera.
 - Sustituidas imagenes ficticias locales por fotos reales para las rutas registradas en `product_images`.
 - Normalizadas rutas de imagen de producto a `.jpg` en la base local.
 - Aniadido `product-image-sources.json` con el origen usado para cada imagen local.
+- Actualizados datos locales de stock: `min_stock = 0` pasa a 5-25 y `current_stock = 0` pasa a 100-1000.
 
 ### d25b505 - protege jerarquia de categorias
 
