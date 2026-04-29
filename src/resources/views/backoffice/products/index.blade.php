@@ -391,31 +391,6 @@
 
                                     <td>{{ $product->description ?: '-' }}</td>
 
-                                    <td>{{ $product->code }}</td>
-                                    <td>{{ $product->name }}</td>
-
-                                    <td>
-                                        @forelse($product->categories as $category)
-                                            <span class="badge text-bg-secondary">{{ $category->name }}</span>
-                                        @empty
-                                            -
-                                        @endforelse
-                                    </td>
-
-                                    <td>
-                                        @php($currentRate = $product->rates->first())
-
-                                        @if($currentRate)
-                                            <span class="badge text-bg-success">
-                                                {{ number_format((float) $currentRate->price, 2, ',', '.') }} €
-                                            </span>
-                                        @else
-                                            <span class="badge text-bg-danger">Sin tarifa vigente</span>
-                                        @endif
-                                    </td>
-
-                                    <td>{{ $product->description ?: '-' }}</td>
-
                                     <td class="product-actions-cell">
                                         <div class="product-actions-grid">
                                             @if(auth()->user()->hasPermission('products_view'))

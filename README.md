@@ -48,6 +48,13 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 ## Historial de cambios documentados
 
+### Pendiente - corrige tabla de productos y renueva imagenes locales
+
+- Corregida la tabla de productos para que las columnas coincidan con la cabecera.
+- Sustituidas imagenes ficticias locales por fotos reales para las rutas registradas en `product_images`.
+- Normalizadas rutas de imagen de producto a `.jpg` en la base local.
+- Aniadido `product-image-sources.json` con el origen usado para cada imagen local.
+
 ### d25b505 - protege jerarquia de categorias
 
 - Corregidos imports de rutas con namespace `Backoffice`.

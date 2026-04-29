@@ -1,0 +1,227 @@
+﻿[
+    {
+        "file":  "products/1/FgCVbZ9OG2oayAvUFmf8r67mVzWRXdGIh9yXLjOi.jpg",
+        "query":  "pharmacy,medicine",
+        "source":  "https://loremflickr.com/900/900/pharmacy,medicine/all?lock=2000"
+    },
+    {
+        "file":  "products/10/bR5aV9vBGDjr0sNsG6JIkIRN5dGBvdxjtWydGxsB.jpg",
+        "query":  "medicine,bottle",
+        "source":  "https://loremflickr.com/900/900/medicine,bottle/all?lock=2001"
+    },
+    {
+        "file":  "products/11/18gCeGyb39mhYYpfmISNR7qlsWwnzVTsKgm1OnI6.jpg",
+        "query":  "pills,bottle",
+        "source":  "https://loremflickr.com/900/900/pills,bottle/all?lock=2002"
+    },
+    {
+        "file":  "products/11/UmGpzvgbQxggvjy2U9ee6rFMSCSLkUsrxfehvc82.jpg",
+        "query":  "vitamins,bottle",
+        "source":  "https://loremflickr.com/900/900/vitamins,bottle/all?lock=2003"
+    },
+    {
+        "file":  "products/12/gOt02j1JWuUtBmaoXrzVjyFTlE7DNROY0u3GQIhm.jpg",
+        "query":  "sunscreen,bottle",
+        "source":  "https://loremflickr.com/900/900/sunscreen,bottle/all?lock=2004"
+    },
+    {
+        "file":  "products/13/nwUwqxT7gzPcgrddTojQ6UABREbLxvfAINuVqpiv.jpg",
+        "query":  "cream,tube",
+        "source":  "https://loremflickr.com/900/900/cream,tube/all?lock=2005"
+    },
+    {
+        "file":  "products/16/3m4WAHXaDN1OzWzMos0NDWJ5A9zZGgfPuTdNqA2M.jpg",
+        "query":  "toothpaste,tube",
+        "source":  "https://loremflickr.com/900/900/toothpaste,tube/all?lock=2006"
+    },
+    {
+        "file":  "products/16/dWlO8CZm9WhR3vDw03mgIA5JpvepDxzf90M80OqM.jpg",
+        "query":  "firstaid,kit",
+        "source":  "https://loremflickr.com/900/900/firstaid,kit/all?lock=2007"
+    },
+    {
+        "file":  "products/16/WvzQ6PBXq7ezpauoT77N4Z5bFlLY0GMu9SSao3Tf.jpg",
+        "query":  "bandage,package",
+        "source":  "https://loremflickr.com/900/900/bandage,package/all?lock=2008"
+    },
+    {
+        "file":  "products/17/6a901c70-8d02-4d96-801b-496e4f9c2e3e.jpg",
+        "query":  "sanitizer,bottle",
+        "source":  "https://loremflickr.com/900/900/sanitizer,bottle/all?lock=2009"
+    },
+    {
+        "file":  "products/17/8c74f8fa-a9be-476b-9ce1-7ec53f8b1a1d.jpg",
+        "query":  "soap,bottle",
+        "source":  "https://loremflickr.com/900/900/soap,bottle/all?lock=2010"
+    },
+    {
+        "file":  "products/2/EumuRCbqOjcP6ZrAQu95hSTX8aYP2Z4tUD81W8r6.jpg",
+        "query":  "lotion,bottle",
+        "source":  "https://loremflickr.com/900/900/lotion,bottle/all?lock=2011"
+    },
+    {
+        "file":  "products/21/JrjCsbmy9zTdEuIWrFHD0meOV1QH0gaiWBvk2WHh.jpg",
+        "query":  "cosmetics,pharmacy",
+        "source":  "https://loremflickr.com/900/900/cosmetics,pharmacy/all?lock=2012"
+    },
+    {
+        "file":  "products/21/XKMtGt5pluwEPqjPhrFUArKT6TNGS7JXkeXdwNzc.jpg",
+        "query":  "supplement,bottle",
+        "source":  "https://loremflickr.com/900/900/supplement,bottle/all?lock=2013"
+    },
+    {
+        "file":  "products/25/h6OG1phpnULOUNw2BdZIFNPQOnxsRnTHPNFY1xaI.jpg",
+        "query":  "capsules,pills",
+        "source":  "https://loremflickr.com/900/900/capsules,pills/all?lock=2014"
+    },
+    {
+        "file":  "products/28/cB7K9eS1ckisLyyvDDddOzLhJYVUS2leezTyu9TZ.jpg",
+        "query":  "medical,product",
+        "source":  "https://loremflickr.com/900/900/medical,product/all?lock=2015"
+    },
+    {
+        "file":  "products/29/pPhavEt0zJMjGuN0ZBEXVBOtfjFZf91AV6Q8uHr3.jpg",
+        "query":  "healthcare,product",
+        "source":  "https://loremflickr.com/900/900/healthcare,product/all?lock=2016"
+    },
+    {
+        "file":  "products/3/chXnDjvAu5zmvi99gzPAZvL733nNOpymOC64mqDC.jpg",
+        "query":  "pharmacy,product",
+        "source":  "https://loremflickr.com/900/900/pharmacy,product/all?lock=2017"
+    },
+    {
+        "file":  "products/33/FQH1qC1TaL7UOWiJpmXzvChV5MTIvz5OCNqCRoCq.jpg",
+        "query":  "medicine,package",
+        "source":  "https://loremflickr.com/900/900/medicine,package/all?lock=2018"
+    },
+    {
+        "file":  "products/35/aVxfODKIIZjSt7kAW8U9uKWvjWuVoVqr7slAy8B7.jpg",
+        "query":  "drugstore,product",
+        "source":  "https://loremflickr.com/900/900/drugstore,product/all?lock=2019"
+    },
+    {
+        "file":  "products/4/EQfwgME3pq4fYptuSdeDRnoy5iOtsFo3aibXhuae.jpg",
+        "query":  "vitamin,pills",
+        "source":  "https://loremflickr.com/900/900/vitamin,pills/all?lock=2020"
+    },
+    {
+        "file":  "products/5/m0ZIFWWk7O5tKtY8f9k5SlTWkJk5CoukNCXY4Iej.jpg",
+        "query":  "ointment,tube",
+        "source":  "https://loremflickr.com/900/900/ointment,tube/all?lock=2021"
+    },
+    {
+        "file":  "products/6/WkFZJXUpDEpYmVJTuZIp51Mavl4qpKbn8HOPB89p.jpg",
+        "query":  "spray,bottle",
+        "source":  "https://loremflickr.com/900/900/spray,bottle/all?lock=2022"
+    },
+    {
+        "file":  "products/7/dSfVLgC4leNzljjPk2HkP3E4MiXXeQYBkJ0a2byF.jpg",
+        "query":  "thermometer,medical",
+        "source":  "https://loremflickr.com/900/900/thermometer,medical/all?lock=2023"
+    },
+    {
+        "file":  "products/8/qL0kHGnsKof7q8L7152KzPoKN8I3OJCQfT9K2YyB.jpg",
+        "query":  "mask,medical",
+        "source":  "https://loremflickr.com/900/900/mask,medical/all?lock=2024"
+    },
+    {
+        "file":  "products/9/d5G0bIlfMyYQ6l6m2tsnRWNygRybj8PIjHR22885.jpg",
+        "query":  "syrup,bottle",
+        "source":  "https://loremflickr.com/900/900/syrup,bottle/all?lock=2025"
+    },
+    {
+        "file":  "products/product-160.jpg",
+        "query":  "skin,care",
+        "source":  "https://loremflickr.com/900/900/skin,care/all?lock=2026"
+    },
+    {
+        "file":  "products/product-179.jpg",
+        "query":  "oral,care",
+        "source":  "https://loremflickr.com/900/900/oral,care/all?lock=2027"
+    },
+    {
+        "file":  "products/product-289.jpg",
+        "query":  "medical,supplies",
+        "source":  "https://loremflickr.com/900/900/medical,supplies/all?lock=2028"
+    },
+    {
+        "file":  "products/product-311.jpg",
+        "query":  "painkiller,pills",
+        "source":  "https://loremflickr.com/900/900/painkiller,pills/all?lock=2029"
+    },
+    {
+        "file":  "products/product-314.jpg",
+        "query":  "health,product",
+        "source":  "https://loremflickr.com/900/900/health,product/all?lock=2030"
+    },
+    {
+        "file":  "products/product-451.jpg",
+        "query":  "pharmacist,medicine",
+        "source":  "https://loremflickr.com/900/900/pharmacist,medicine/all?lock=2031"
+    },
+    {
+        "file":  "products/product-544.jpg",
+        "query":  "tablet,bottle",
+        "source":  "https://loremflickr.com/900/900/tablet,bottle/all?lock=2032"
+    },
+    {
+        "file":  "products/product-565.jpg",
+        "query":  "capsule,bottle",
+        "source":  "https://loremflickr.com/900/900/capsule,bottle/all?lock=2033"
+    },
+    {
+        "file":  "products/product-611.jpg",
+        "query":  "pharma,product",
+        "source":  "https://loremflickr.com/900/900/pharma,product/all?lock=2034"
+    },
+    {
+        "file":  "products/product-628.jpg",
+        "query":  "cream,bottle",
+        "source":  "https://loremflickr.com/900/900/cream,bottle/all?lock=2035"
+    },
+    {
+        "file":  "products/product-651.jpg",
+        "query":  "hygiene,product",
+        "source":  "https://loremflickr.com/900/900/hygiene,product/all?lock=2036"
+    },
+    {
+        "file":  "products/product-699.jpg",
+        "query":  "plaster,medical",
+        "source":  "https://loremflickr.com/900/900/plaster,medical/all?lock=2037"
+    },
+    {
+        "file":  "products/product-730.jpg",
+        "query":  "drops,bottle",
+        "source":  "https://loremflickr.com/900/900/drops,bottle/all?lock=2038"
+    },
+    {
+        "file":  "products/product-749.jpg",
+        "query":  "wellness,product",
+        "source":  "https://loremflickr.com/900/900/wellness,product/all?lock=2039"
+    },
+    {
+        "file":  "products/product-780.jpg",
+        "query":  "drugstore,medicine",
+        "source":  "https://loremflickr.com/900/900/drugstore,medicine/all?lock=2040"
+    },
+    {
+        "file":  "products/product-783.jpg",
+        "query":  "baby,care",
+        "source":  "https://loremflickr.com/900/900/baby,care/all?lock=2041"
+    },
+    {
+        "file":  "products/product-913.jpg",
+        "query":  "sun,cream",
+        "source":  "https://loremflickr.com/900/900/sun,cream/all?lock=2042"
+    },
+    {
+        "file":  "products/product-971.jpg",
+        "query":  "vitamin,supplement",
+        "source":  "https://loremflickr.com/900/900/vitamin,supplement/all?lock=2043"
+    },
+    {
+        "file":  "products/product-988.jpg",
+        "query":  "medical,bottle",
+        "source":  "https://loremflickr.com/900/900/medical,bottle/all?lock=2044"
+    }
+]
