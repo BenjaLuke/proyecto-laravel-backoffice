@@ -456,22 +456,6 @@ class ProductController extends Controller
 
             $sortOrder = (int) (ProductImage::where('product_id', $product->id)->max('sort_order') ?? 0);
 
-            $this->resequenceProductImages($product);
-            $this->applyPrimaryImage($product, $primaryImageSource, [], $createdFromNewUploadMap);
-
-            $product->refresh()->load(['categories', 'rates', 'images']);
-            $afterSnapshot = $this->getProductActivitySnapshot($product);
-            $changes = $this->buildSnapshotDiff($beforeSnapshot, $afterSnapshot);
-
-            if (!empty($changes)) {
-                $this->logProductActivity(
-                    $product,
-                    'updated',
-                    'Producto actualizado.',
-                    $changes
-                );
-            }
-
             foreach ($request->file('images', []) as $index => $uploadedImage) {
                 $sortOrder++;
 
@@ -490,6 +474,19 @@ class ProductController extends Controller
 
             $this->resequenceProductImages($product);
             $this->applyPrimaryImage($product, $primaryImageSource, [], $createdFromNewUploadMap);
+
+            $product->refresh()->load(['categories', 'rates', 'images']);
+            $afterSnapshot = $this->getProductActivitySnapshot($product);
+            $changes = $this->buildSnapshotDiff($beforeSnapshot, $afterSnapshot);
+
+            if (!empty($changes)) {
+                $this->logProductActivity(
+                    $product,
+                    'updated',
+                    'Producto actualizado.',
+                    $changes
+                );
+            }
 
             DB::commit();
 

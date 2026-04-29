@@ -41,11 +41,13 @@ return new class extends Migration
             END
         ");
 
-        DB::statement("
-            ALTER TABLE purchase_orders
-            MODIFY status ENUM('pendiente', 'servido', 'cancelado')
-            NOT NULL DEFAULT 'pendiente'
-        ");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("
+                ALTER TABLE purchase_orders
+                MODIFY status ENUM('pendiente', 'servido', 'cancelado')
+                NOT NULL DEFAULT 'pendiente'
+            ");
+        }
     }
 
     public function down(): void

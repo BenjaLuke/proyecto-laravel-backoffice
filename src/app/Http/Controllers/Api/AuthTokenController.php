@@ -28,14 +28,7 @@ class AuthTokenController extends Controller
 
         $user->tokens()->where('name', $data['device_name'])->delete();
 
-        $token = $user->createToken($data['device_name'], [
-            'products:read',
-            'products:write',
-            'categories:read',
-            'categories:write',
-            'calendar:read',
-            'calendar:write',
-        ]);
+        $token = $user->createToken($data['device_name'], $this->tokenAbilitiesFor($user));
 
         return response()->json([
             'token' => $token->plainTextToken,
@@ -54,5 +47,22 @@ class AuthTokenController extends Controller
         return response()->json([
             'message' => 'Token revocado correctamente.',
         ]);
+    }
+
+    private function tokenAbilitiesFor(User $user): array
+    {
+        $permissionsToAbilities = [
+            'products_view' => 'products:read',
+            'products_manage' => 'products:write',
+            'categories_view' => 'categories:read',
+            'categories_manage' => 'categories:write',
+            'calendar_view' => 'calendar:read',
+            'calendar_manage' => 'calendar:write',
+        ];
+
+        return collect($permissionsToAbilities)
+            ->filter(fn (string $ability, string $permission): bool => $user->hasPermission($permission))
+            ->values()
+            ->all();
     }
 }

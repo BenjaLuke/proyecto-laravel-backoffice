@@ -15,6 +15,8 @@ class PurchaseOrderResource extends JsonResource
             'units' => $this->units,
             'unit_price' => $this->unit_price,
             'total_price' => $this->total_price,
+            'status' => $this->status,
+            'served_at' => $this->served_at?->toISOString(),
             'notes' => $this->notes,
             'product' => [
                 'id' => $this->product?->id,
