@@ -35,9 +35,13 @@ class PurchaseOrderApiController extends Controller
     {
         $data = $this->validatePurchaseOrder($request);
 
+        // Crear un pedido servido afecta a dos tablas: purchase_orders y stock.
+        // La transaccion evita que se guarde una parte si la otra falla.
         $order = DB::transaction(function () use ($data) {
             $status = $data['status'] ?? 'pendiente';
 
+            // Bloqueamos el producto mientras calculamos y movemos stock para
+            // evitar que dos peticiones simultaneas gasten las mismas unidades.
             $product = Product::with('rates')
                 ->lockForUpdate()
                 ->findOrFail($data['product_id']);
@@ -76,11 +80,16 @@ class PurchaseOrderApiController extends Controller
     {
         $data = $this->validatePurchaseOrder($request);
 
+        // La actualizacion puede cambiar producto, unidades o estado. Por eso
+        // se bloquean el pedido y los productos implicados dentro de la misma
+        // transaccion antes de tocar stock.
         $purchaseOrder = DB::transaction(function () use ($data, $purchaseOrder) {
             $purchaseOrder = PurchaseOrder::lockForUpdate()->findOrFail($purchaseOrder->id);
             $oldStatus = $purchaseOrder->status;
             $newStatus = $data['status'] ?? $oldStatus ?? 'pendiente';
 
+            // Regla de negocio: un pedido servido ya ha movido stock. Para
+            // deshacerlo debe usarse el flujo de devoluciones, no cambiarlo aqui.
             if ($oldStatus === 'servido' && $newStatus !== 'servido') {
                 throw ValidationException::withMessages([
                     'status' => 'Un pedido servido no puede pasar a pendiente ni a cancelado.',
@@ -109,6 +118,8 @@ class PurchaseOrderApiController extends Controller
 
             $rate = $this->resolveRateForDate($newProduct, $data['order_date']);
 
+            // Si un pedido ya servido cambia de producto o unidades, primero
+            // devolvemos el stock anterior y luego aplicamos el nuevo descuento.
             $servedStockDataChanged =
                 $oldStatus === 'servido' &&
                 (
@@ -155,6 +166,8 @@ class PurchaseOrderApiController extends Controller
 
     public function destroy(PurchaseOrder $purchaseOrder)
     {
+        // Igual que en el backoffice, no se borra un pedido servido porque ya
+        // dejo rastro en stock. El flujo correcto es registrar una devolucion.
         if ($purchaseOrder->status === 'servido') {
             return response()->json([
                 'message' => 'No se puede borrar un pedido servido. Debe gestionarse mediante devoluciones.',
@@ -178,6 +191,8 @@ class PurchaseOrderApiController extends Controller
             'notes' => ['nullable', 'string'],
         ]);
 
+        // Esta segunda fase de validacion necesita consultar las tarifas del
+        // producto para asegurar que existe un precio vigente en la fecha elegida.
         $validator->after(function ($validator) use ($request) {
             $productId = $request->input('product_id');
             $orderDate = $request->input('order_date');
@@ -207,6 +222,8 @@ class PurchaseOrderApiController extends Controller
 
     private function resolveRateForDate(Product $product, string $orderDate)
     {
+        // Las tarifas pueden tener fecha fin nula. En ese caso se consideran
+        // abiertas y vigentes desde start_date en adelante.
         return $product->rates
             ->filter(function ($rate) use ($orderDate) {
                 $start = $rate->start_date?->format('Y-m-d');
@@ -231,6 +248,8 @@ class PurchaseOrderApiController extends Controller
     {
         $stockBefore = (int) $product->current_stock;
 
+        // No permitimos stock negativo: si no hay unidades suficientes, la
+        // transaccion completa se revierte y el pedido no queda servido.
         if ($stockBefore < $units) {
             throw ValidationException::withMessages([
                 'status' => 'No hay stock suficiente para marcar este pedido como servido.',
@@ -243,6 +262,8 @@ class PurchaseOrderApiController extends Controller
             'current_stock' => $stockAfter,
         ]);
 
+        // Guardamos el movimiento con stock_before y stock_after para poder
+        // auditar como se llego al stock actual.
         StockMovement::create([
             'product_id' => $product->id,
             'movement_type' => $movementType,
@@ -265,6 +286,8 @@ class PurchaseOrderApiController extends Controller
             'current_stock' => $stockAfter,
         ]);
 
+        // Los ajustes positivos se usan para revertir stock previamente
+        // descontado cuando cambia un pedido ya servido.
         StockMovement::create([
             'product_id' => $product->id,
             'movement_type' => $movementType,

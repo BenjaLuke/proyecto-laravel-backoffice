@@ -12,6 +12,9 @@ class CheckPermission
     {
         $user = $request->user();
 
+        // Este middleware protege rutas del backoffice con permisos internos
+        // como products_manage o users_manage. Los administradores pasan por
+        // User::hasPermission(), asi mantenemos la regla en un solo sitio.
         if (!$user || !$user->hasPermission($permission)) {
             abort(403, 'No tienes permisos para acceder a esta sección.');
         }

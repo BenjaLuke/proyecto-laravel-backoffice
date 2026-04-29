@@ -407,6 +407,8 @@ class ProductController extends Controller
     {
         $data = $this->validateProduct($request, $product);
 
+        // Tomamos una foto del estado inicial para poder registrar despues
+        // exactamente que cambio en el historial de actividad.
         $product->Load(['categories', 'rates', 'images']);
         $beforeSnapshot = $this->getProductActivitySnapshot($product);
         $storedPaths = [];
@@ -416,6 +418,8 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         try {
+            // Producto, categorias, tarifas e imagenes se actualizan como una
+            // sola operacion logica. Si algo falla, la base de datos vuelve atras.
             $product->update([
                 'code' => $data['code'],
                 'name' => $data['name'],
@@ -425,6 +429,8 @@ class ProductController extends Controller
 
             $product->categories()->sync($data['categories']);
 
+            // Reemplazamos las tarifas completas porque el formulario envia el
+            // conjunto final. La validacion previa evita huecos raros como solapes.
             $product->rates()->delete();
 
             foreach ($data['rates'] as $rate) {
@@ -439,6 +445,8 @@ class ProductController extends Controller
                 ->map(fn ($id) => (int) $id)
                 ->all();
 
+            // Las imagenes existentes pueden borrarse o reordenarse. Dejamos
+            // is_primary a false y al final elegimos una unica principal.
             foreach ($product->images as $image) {
                 if (in_array($image->id, $deleteIds, true)) {
                     Storage::disk('public')->delete($image->path);
@@ -456,6 +464,8 @@ class ProductController extends Controller
 
             $sortOrder = (int) (ProductImage::where('product_id', $product->id)->max('sort_order') ?? 0);
 
+            // Guardamos primero las imagenes nuevas para conocer sus IDs. Ese
+            // mapa permite resolver primary_image_source=new:0, new:1, etc.
             foreach ($request->file('images', []) as $index => $uploadedImage) {
                 $sortOrder++;
 
@@ -472,9 +482,13 @@ class ProductController extends Controller
                 $createdFromNewUploadMap[(int) $index] = $createdImage->id;
             }
 
+            // Normalizamos el orden y aplicamos la imagen principal al final,
+            // cuando ya existen tanto las imagenes antiguas como las recien subidas.
             $this->resequenceProductImages($product);
             $this->applyPrimaryImage($product, $primaryImageSource, [], $createdFromNewUploadMap);
 
+            // El log se calcula con el estado final. Asi incluye imagenes nuevas,
+            // borradas, reordenadas y la principal realmente aplicada.
             $product->refresh()->load(['categories', 'rates', 'images']);
             $afterSnapshot = $this->getProductActivitySnapshot($product);
             $changes = $this->buildSnapshotDiff($beforeSnapshot, $afterSnapshot);
@@ -496,6 +510,8 @@ class ProductController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
+            // Las subidas a disco no se revierten con la transaccion SQL. Si
+            // falla algo despues de subirlas, las borramos manualmente.
             foreach ($storedPaths as $path) {
                 Storage::disk('public')->delete($path);
             }
@@ -868,6 +884,9 @@ class ProductController extends Controller
         array $createdFromSourceMap = [],
         array $createdFromNewUploadMap = []
         ): void {
+        // El formulario puede elegir principal desde tres origenes:
+        // existing:id, source:id al duplicar producto, o new:index para subidas.
+        // Esta funcion traduce esa seleccion al ID real guardado en product_images.
         $images = ProductImage::where('product_id', $product->id)
             ->orderBy('sort_order')
             ->orderBy('id')
@@ -896,9 +915,12 @@ class ProductController extends Controller
         }
 
         if (!$primaryImageId) {
+            // Si la seleccion ya no es valida, por ejemplo porque se borro esa
+            // imagen, usamos la primera como fallback para que siempre haya una.
             $primaryImageId = $images->first()->id;
         }
 
+        // Garantizamos una unica imagen principal por producto.
         ProductImage::where('product_id', $product->id)->update(['is_primary' => false]);
 
         ProductImage::where('product_id', $product->id)
@@ -1004,6 +1026,8 @@ class ProductController extends Controller
 
             $normalized = [];
 
+            // Comprobamos solapes de tarifas ordenando sus rangos de fechas.
+            // Una tarifa abierta se trata como si terminara en una fecha muy lejana.
             foreach ($rates as $index => $rate) {
                 $start = $rate['start_date'] ?? null;
                 $end = $rate['end_date'] ?? null;
@@ -1048,6 +1072,8 @@ class ProductController extends Controller
             if ($product) {
                 $validImageIds = $product->images()->pluck('id')->all();
 
+                // Defensa contra manipulacion del formulario: solo se pueden
+                // borrar o reordenar imagenes que pertenecen al producto editado.
                 foreach ((array) $request->input('delete_images', []) as $imageId) {
                     if (!in_array((int) $imageId, $validImageIds, true)) {
                         $validator->errors()->add(
@@ -1093,6 +1119,8 @@ class ProductController extends Controller
         if ($primaryImageSource !== '') {
             $validSelections = [];
 
+            // Construimos una lista blanca de selecciones de imagen principal.
+            // Asi evitamos que llegue un existing/source/new inventado desde el navegador.
             foreach ($request->file('images', []) as $index => $uploadedImage) {
                 $validSelections[] = 'new:' . $index;
             }

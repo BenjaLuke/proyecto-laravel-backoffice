@@ -41,6 +41,8 @@ return new class extends Migration
             END
         ");
 
+        // MySQL permite convertir status a ENUM. SQLite se usa en tests y no
+        // soporta este ALTER TABLE, asi que conserva la columna como string.
         if (DB::getDriverName() !== 'sqlite') {
             DB::statement("
                 ALTER TABLE purchase_orders

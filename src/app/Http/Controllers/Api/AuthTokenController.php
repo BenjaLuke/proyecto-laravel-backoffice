@@ -20,12 +20,16 @@ class AuthTokenController extends Controller
 
         $user = User::where('username', $data['username'])->first();
 
+        // Validamos manualmente para devolver siempre el mismo error y no revelar
+        // si lo que ha fallado es el usuario o la contrasena.
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'username' => ['Credenciales incorrectas.'],
             ]);
         }
 
+        // Un dispositivo solo mantiene un token activo: si vuelve a iniciar sesion,
+        // revocamos el anterior antes de crear el nuevo.
         $user->tokens()->where('name', $data['device_name'])->delete();
 
         $token = $user->createToken($data['device_name'], $this->tokenAbilitiesFor($user));
@@ -51,6 +55,9 @@ class AuthTokenController extends Controller
 
     private function tokenAbilitiesFor(User $user): array
     {
+        // Las abilities de Sanctum son los permisos que tendra el token en la API.
+        // Se derivan de los permisos reales del usuario para que un usuario de
+        // solo lectura no pueda obtener un token con permisos de escritura.
         $permissionsToAbilities = [
             'products_view' => 'products:read',
             'products_manage' => 'products:write',

@@ -29,7 +29,7 @@ services:
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_USER: laravel
-      MYSQL_PASSWORD: secretdocke compose 
+      MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3307:3306"

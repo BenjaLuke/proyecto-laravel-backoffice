@@ -85,6 +85,8 @@ class User extends Authenticatable
 
     public function getPermissions(): array
     {
+        // Mezclamos los permisos guardados con la lista por defecto para que
+        // cualquier permiso nuevo exista siempre como false en usuarios antiguos.
         return array_merge(
             self::defaultPermissions(),
             $this->permissions ?? []
@@ -93,6 +95,8 @@ class User extends Authenticatable
 
     public function hasPermission(string $permission): bool
     {
+        // El administrador tiene acceso completo. El resto depende del array
+        // permissions, que tambien alimenta las abilities de los tokens API.
         if ($this->isAdmin()) {
             return true;
         }
