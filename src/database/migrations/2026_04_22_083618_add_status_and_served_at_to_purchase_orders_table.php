@@ -21,12 +21,6 @@ return new class extends Migration
             });
         }
 
-        DB::table('purchase_orders')
-            ->whereNull('served_at')
-            ->update([
-                'served_at' => DB::raw('created_at'),
-            ]);
-
         DB::statement("
             UPDATE purchase_orders
             SET status = CASE
@@ -40,6 +34,19 @@ return new class extends Migration
                 ELSE 'servido'
             END
         ");
+
+        DB::table('purchase_orders')
+            ->where('status', 'servido')
+            ->whereNull('served_at')
+            ->update([
+                'served_at' => DB::raw('created_at'),
+            ]);
+
+        DB::table('purchase_orders')
+            ->where('status', '!=', 'servido')
+            ->update([
+                'served_at' => null,
+            ]);
 
         // MySQL permite convertir status a ENUM. SQLite se usa en tests y no
         // soporta este ALTER TABLE, asi que conserva la columna como string.

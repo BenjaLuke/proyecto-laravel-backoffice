@@ -22,6 +22,8 @@ class PurchaseOrderFactory extends Factory
             'units' => $units,
             'unit_price' => $unitPrice,
             'total_price' => round($units * $unitPrice, 2),
+            'status' => 'pendiente',
+            'served_at' => null,
             'notes' => fake()->optional()->sentence(),
         ];
     }
