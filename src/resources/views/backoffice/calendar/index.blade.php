@@ -215,6 +215,7 @@
             padding: 8px;
             background: #f8f9fa;
             border-left: 6px solid #6c757d;
+            color: #111827;
         }
 
         .calendar-order--pendiente {

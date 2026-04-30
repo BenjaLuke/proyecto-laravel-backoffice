@@ -117,7 +117,11 @@
 
     <div class="row g-3 mb-4">
         <div class="col-md-6 col-xl-3">
-            <div class="card-lift p-3 h-100">
+            @if(auth()->user()->hasPermission('calendar_view'))
+                <a href="{{ route('calendar.index', ['month' => now()->format('Y-m')]) }}" class="card-lift metric-link-card p-3 h-100 d-block text-decoration-none">
+            @else
+                <div class="card-lift p-3 h-100">
+            @endif
                 <div class="d-flex justify-content-between align-items-start gap-3">
                     <div>
                         <div class="metric-label">Pedidos este mes</div>
@@ -127,7 +131,11 @@
                         <i class="bi bi-calendar3"></i>
                     </span>
                 </div>
-            </div>
+            @if(auth()->user()->hasPermission('calendar_view'))
+                </a>
+            @else
+                </div>
+            @endif
         </div>
 
         <div class="col-md-6 col-xl-3">

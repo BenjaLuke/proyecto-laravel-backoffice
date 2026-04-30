@@ -48,7 +48,12 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 ## Historial de cambios documentados
 
-### Pendiente - enlaza metricas del dashboard con listados filtrados
+### Pendiente - ajusta calendario oscuro y enlace mensual
+
+- Corregido el color de texto de las tarjetas de pedido del calendario para que sea legible en modo oscuro.
+- Enlazada la metrica de pedidos del mes con el calendario filtrado al mes actual.
+
+### e967c35 - enlaza metricas del dashboard con listados filtrados
 
 - Convertidas en enlaces las metricas de pedidos de hoy, productos sin imagenes, productos sin tarifa activa y tarifas que caducan en 7 dias.
 - Aniadido filtro de productos para tarifas que caducan en los proximos 7 dias.
