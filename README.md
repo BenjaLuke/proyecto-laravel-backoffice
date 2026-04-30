@@ -48,7 +48,12 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 ## Historial de cambios documentados
 
-### Pendiente - ajusta calendario oscuro y enlace mensual
+### Pendiente - resalta el dia actual en calendario
+
+- Aniadido resaltado verde transparente por detras de la tarjeta del dia actual.
+- Ajustado el fondo de las tarjetas de dia en modo oscuro para mejorar contraste.
+
+### b369b19 - ajusta calendario oscuro y enlace mensual
 
 - Corregido el color de texto de las tarjetas de pedido del calendario para que sea legible en modo oscuro.
 - Enlazada la metrica de pedidos del mes con el calendario filtrado al mes actual.

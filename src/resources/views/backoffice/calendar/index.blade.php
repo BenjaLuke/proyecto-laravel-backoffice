@@ -116,9 +116,10 @@
                 $dayKey = $day->format('Y-m-d');
                 $dayOrders = $orders->get($dayKey, collect());
                 $isCurrentMonth = $day->month === $currentMonth->month;
+                $isToday = $day->isToday();
             @endphp
 
-            <div class="calendar-day {{ $isCurrentMonth ? '' : 'calendar-day--muted' }}">
+            <div class="calendar-day {{ $isCurrentMonth ? '' : 'calendar-day--muted' }} {{ $isToday ? 'calendar-day--today' : '' }}">
                 <div class="calendar-day__header">
                     <strong>{{ $day->format('d') }}</strong>
 
@@ -182,6 +183,7 @@
         }
 
         .calendar-day {
+            position: relative;
             background: white;
             border: 1px solid #dee2e6;
             border-radius: 10px;
@@ -189,6 +191,30 @@
             display: flex;
             flex-direction: column;
             padding: 10px;
+        }
+
+        html[data-theme="dark"] .calendar-day {
+            background: #1e293b;
+            border-color: rgba(148, 163, 184, 0.28);
+        }
+
+        .calendar-day--today {
+            z-index: 1;
+        }
+
+        .calendar-day--today::before {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            z-index: -1;
+            border-radius: 14px;
+            background: rgba(25, 135, 84, 0.18);
+            border: 1px solid rgba(25, 135, 84, 0.28);
+        }
+
+        html[data-theme="dark"] .calendar-day--today::before {
+            background: rgba(34, 197, 94, 0.20);
+            border-color: rgba(34, 197, 94, 0.36);
         }
 
         .calendar-day--muted {
