@@ -48,7 +48,13 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 ## Historial de cambios documentados
 
-### ????????? - seed y desavenenciasa VSC/laravel
+### 7a74367 - arregla colores del dashboard
+
+- Ajustados los indicadores de control interno para que usen color verde cuando no hay incidencias.
+- Cambiados los avisos de productos sin imagenes o sin tarifa activa a color de advertencia solo cuando requieren revision.
+- Alineados los iconos de esas metricas con el estado real de cada contador.
+
+### 56a2497 - seed y desavenencias VSC/laravel
 
 - Hacemos un seed forzado para que todos los productos tengan su stock y stock mínimo
 - Arreglamos desavenencias en VSC que laravel entendía pero que VSC me gritaba.
