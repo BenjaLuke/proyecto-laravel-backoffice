@@ -48,6 +48,14 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 ## Historial de cambios documentados
 
+### 5010d81 - mejoramos los seeders
+
+- El seeder principal ahora crea 36 productos de ejemplo por ejecución en lugar de 12.
+- Añadido soporte para sembrar imágenes reales desde `storage/app/imports/msx-covers` cuando esa carpeta existe.
+- Añadido el comando `products:import-msx-covers` para reasignar portadas reales sobre registros ya creados.
+- Corregido el acceso público a imágenes recreando `public/storage` como enlace válido a `storage/app/public`.
+- Actualizada la documentación técnica del proyecto para reflejar el nuevo flujo de seed e importación.
+
 ### 7e2c31b - comenta vistas y limpia plantilla de email
 
 - Añadidos comentarios de orientación en las vistas de backoffice para identificar cabeceras, filtros, formularios, tablas, tarjetas y estilos.
