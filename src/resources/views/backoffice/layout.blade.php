@@ -5,6 +5,7 @@
     <title>@yield('title', 'Backoffice')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {{-- Aplica el tema antes de pintar la página para evitar parpadeos. --}}
     <script>
         (function () {
             const savedTheme = localStorage.getItem('backoffice-theme');
@@ -18,7 +19,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
+    {{-- Diseño base compartido por todo el backoffice. --}}
     <style>
+        /* Variables del tema claro. */
         :root {
             --bg-body: #eef3f8;
             --bg-body-2: rgba(13, 110, 253, 0.10);
@@ -42,6 +45,7 @@
             --theme-btn-color: #ffffff;
         }
 
+        /* Variables del tema oscuro. */
         html[data-theme="dark"] {
             --bg-body: #0b1220;
             --bg-body-2: rgba(59, 130, 246, 0.16);
@@ -579,6 +583,7 @@
 </head>
 <body>
 
+{{-- Navegación principal filtrada por permisos del usuario autenticado. --}}
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top">
     <div class="container">
         <a class="navbar-brand" href="{{ route('backoffice.dashboard') }}">Backoffice</a>
@@ -671,6 +676,7 @@
 </nav>
 
 <main class="container py-4 page-shell">
+    {{-- Mensajes flash y errores de validación compartidos por todas las pantallas. --}}
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -707,6 +713,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+{{-- Persistencia y alternancia manual del modo claro/oscuro. --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const root = document.documentElement;

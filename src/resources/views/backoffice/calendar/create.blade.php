@@ -3,12 +3,14 @@
 @section('title', 'Nuevo pedido')
 
 @section('content')
+    {{-- Pantalla de alta de pedido; reutiliza el formulario compartido del calendario. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             <h1 class="h3 mb-4">Nuevo pedido</h1>
 
             <form action="{{ route('calendar.store') }}" method="POST">
                 @csrf
+                {{-- El partial espera una variable $purchaseOrder, aunque en alta sea null. --}}
                 @php($purchaseOrder = $purchaseOrder ?? null)
                 @include('backoffice.calendar._form')
             </form>

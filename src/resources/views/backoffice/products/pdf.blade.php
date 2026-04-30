@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ficha de producto</title>
+    {{-- Estilos compatibles con DomPDF para la ficha de producto. --}}
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
@@ -75,11 +76,13 @@
     </style>
 </head>
 <body>
+    {{-- Cabecera identificativa del producto exportado. --}}
     <div class="header">
         <h1>Ficha de producto</h1>
         <div class="small">Código: {{ $product->code }}</div>
     </div>
 
+    {{-- Datos base del producto. --}}
     <div class="section">
         <h2>Datos generales</h2>
 

@@ -3,11 +3,13 @@
 @section('title', 'Categorías')
 
 @section('content')
+    {{-- Cabecera del listado y acceso al alta. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Categorías</h1>
         <a href="{{ route('categories.create') }}" class="btn btn-primary">Crear una nueva categoría</a>
     </div>
 
+    {{-- Tabla paginada de categorías y acciones de mantenimiento. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             @if($categories->count())

@@ -2,6 +2,7 @@
 
 @section('title', 'Productos')
 
+    {{-- Estilos locales para que la botonera de acciones no rompa la tabla. --}}
     <style>
         .product-actions-cell {
             min-width: 260px;
@@ -33,6 +34,7 @@
         }
     </style>
 
+    {{-- Estilos locales de acciones y resumen de stock. --}}
     <style>
         .product-actions-cell {
             min-width: 260px;
@@ -82,6 +84,7 @@
     </style>
 
 @section('content')
+    {{-- Cabecera del listado y accesos principales de productos. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Productos</h1>
 
@@ -112,6 +115,7 @@
         </div>
     </div>
 
+    {{-- Formulario de filtros combinables: texto, categoría, precio, tarifa, imagen y orden. --}}
     <div class="card shadow-sm mb-3">
         <div class="card-body">
             <form method="GET" action="{{ route('products.index') }}">
@@ -233,6 +237,7 @@
                 </div>
             </form>
 
+            {{-- Guardado/carga de filtros frecuentes en sesión. --}}
             <div class="d-flex flex-wrap gap-2 mt-3">
                 @if($hasActiveFilters)
                     <form method="POST" action="{{ route('products.filters.save') }}" class="d-inline">
@@ -261,6 +266,7 @@
         </div>
     </div>
 
+    {{-- Badges de filtros aplicados en la consulta actual. --}}
     @if($hasActiveFilters)
         <div class="card shadow-sm mb-3 border-primary">
             <div class="card-body py-3">
@@ -279,6 +285,7 @@
         </div>
     @endif
 
+    {{-- Badges de filtros guardados para reutilizarlos. --}}
     @if($hasSavedFilters)
         <div class="card shadow-sm mb-4 border-success">
             <div class="card-body py-3">
@@ -293,6 +300,7 @@
         </div>
     @endif
 
+    {{-- Tabla de productos resultante con acciones por permiso. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             @if($products->count())
@@ -325,6 +333,7 @@
                         <tbody>
                             @foreach($products as $product)
                                 @php
+                                    // Tarifa vigente y estado de stock mostrado en cada fila.
                                     $currentRate = $product->rates->first();
                                     $currentStock = (int) $product->current_stock;
                                     $minStock = (int) $product->min_stock;

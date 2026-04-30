@@ -4,6 +4,7 @@
 
 @section('content')
     @php
+        // Estado global del catálogo mostrado en la cabecera del dashboard.
         $catalogStatusClass = 'ok';
         $catalogStatusText = 'Correcto';
         $catalogStatusIcon = 'bi-check-circle-fill';
@@ -24,6 +25,7 @@
         }
     @endphp
 
+    {{-- Cabecera de bienvenida y resumen rápido del backoffice. --}}
     <div class="hero-panel p-4 mb-4">
         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
             <div>
@@ -48,6 +50,7 @@
         </div>
     </div>
 
+    {{-- Métricas comerciales generales; algunas enlazan al calendario filtrado. --}}
     <div class="section-title">Actividad comercial</div>
     <div class="row g-3 mb-4">
         <div class="col-md-6 col-xl-3">
@@ -181,6 +184,7 @@
         </div>
     </div>
 
+    {{-- Métricas de control interno; las tarjetas clicables llevan a listados filtrados. --}}
     <div class="section-title">Control interno</div>
     
     <div class="row g-3 mb-4">
@@ -271,6 +275,7 @@
 
     <div class="row g-3 mb-4">
         <div class="col-lg-6">
+            {{-- Semáforo compacto para revisar salud de catálogo y tarifas. --}}
             <div class="card-lift p-4 h-100">
                 <h2 class="h5 mb-3">Semáforo del sistema</h2>
 
@@ -328,6 +333,7 @@
         </div>
 
         <div class="col-lg-6">
+            {{-- Accesos directos según permisos y producto más vendido del mes. --}}
             <div class="card-lift p-4 h-100">
                 <h2 class="h5 mb-3">Accesos rápidos</h2>
 
@@ -381,6 +387,7 @@
 
     <div class="row g-3 mb-4">
         <div class="col-lg-6">
+            {{-- Lista corta de tarifas que requieren revisión próxima. --}}
             <div class="card-lift p-4 h-100">
                 <h2 class="h5 mb-3">Tarifas próximas a caducar</h2>
 
@@ -407,6 +414,7 @@
         </div>
 
         <div class="col-lg-6">
+            {{-- Últimos productos dados de alta y contadores relacionados. --}}
             <div class="card-lift p-4 h-100">
                 <h2 class="h5 mb-3">Últimos productos creados</h2>
 
@@ -457,6 +465,7 @@
         </div>
     </div>
 
+    {{-- Últimos pedidos registrados con acceso a edición o calendario. --}}
     <div class="card-lift p-4">
         <h2 class="h5 mb-3">Últimos 5 pedidos</h2>
 

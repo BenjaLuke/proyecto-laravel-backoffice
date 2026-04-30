@@ -3,6 +3,7 @@
 @section('title', 'Nuevo usuario')
 
 @section('content')
+    {{-- Alta de usuario y permisos internos. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             <h1 class="h3 mb-4">Nuevo usuario</h1>

@@ -3,6 +3,7 @@
 @section('title', 'Nueva entrada de stock')
 
 @section('content')
+    {{-- Alta manual de stock que incrementa unidades disponibles del producto. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             <h1 class="h3 mb-4">Nueva entrada de stock</h1>
@@ -10,6 +11,7 @@
             <form action="{{ route('stock-entries.store') }}" method="POST">
                 @csrf
 
+                {{-- Producto que recibirá la entrada de stock. --}}
                 <div class="mb-3">
                     <label for="product_id" class="form-label">Producto</label>
                     <select name="product_id" id="product_id" class="form-select" required>
@@ -25,6 +27,7 @@
                     </select>
                 </div>
 
+                {{-- Datos cuantitativos y económicos de la entrada. --}}
                 <div class="row g-3">
                     <div class="col-md-4">
                         <label for="entry_date" class="form-label">Fecha de entrada</label>
@@ -66,6 +69,7 @@
                     </div>
                 </div>
 
+                {{-- Notas internas sobre proveedor, lote o motivo de la entrada. --}}
                 <div class="mt-3">
                     <label for="notes" class="form-label">Notas</label>
                     <textarea
@@ -76,6 +80,7 @@
                     >{{ old('notes') }}</textarea>
                 </div>
 
+                {{-- Acciones finales del formulario. --}}
                 <div class="d-flex gap-2 mt-4">
                     <button type="submit" class="btn btn-primary">Guardar entrada</button>
                     <a href="{{ route('stock-entries.index') }}" class="btn btn-secondary">Cancelar</a>

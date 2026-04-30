@@ -9,8 +9,10 @@ use App\Models\ProductImage;
 use App\Models\ActivityLog;
 use App\Exports\ProductsExport;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -810,7 +812,10 @@ class ProductController extends Controller
         return false;
     }
 
-    private function buildProductFilterBadges(array $filters, $categories): array
+    /**
+     * @param Collection<int, Category> $categories
+     */
+    private function buildProductFilterBadges(array $filters, Collection $categories): array
     {
         $filters = $this->normalizeProductFilters($filters);
 
@@ -1169,7 +1174,7 @@ class ProductController extends Controller
         ?array $changes = null
     ): void {
         ActivityLog::create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'entity_type' => 'product',
             'entity_id' => $product->id,
             'action' => $action,

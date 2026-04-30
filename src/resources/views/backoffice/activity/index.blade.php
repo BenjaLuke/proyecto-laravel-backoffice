@@ -4,6 +4,7 @@
 
 @section('content')
     @php
+        // Etiquetas y colores para acciones registradas en el log.
         $actionLabels = [
             'created' => 'Creación',
             'updated' => 'Edición',
@@ -23,6 +24,7 @@
         ];
     @endphp
 
+    {{-- Cabecera del log global de actividad de productos. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-1">Actividad del backoffice</h1>
@@ -30,6 +32,7 @@
         </div>
     </div>
 
+    {{-- Filtro por tipo de acción registrada. --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <form method="GET" action="{{ route('activity.index') }}">
@@ -59,6 +62,7 @@
         </div>
     </div>
 
+    {{-- Tabla del log, incluyendo productos activos y archivados. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             @if($activityLogs->count())

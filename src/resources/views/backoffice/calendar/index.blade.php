@@ -3,6 +3,7 @@
 @section('title', 'Calendario de pedidos')
 
 @section('content')
+    {{-- Cabecera con navegación, creación y exportaciones del calendario. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-1">Calendario de pedidos</h1>
@@ -48,6 +49,7 @@
         </div>
     </div>
 
+    {{-- Filtro por rango de fechas; cuando se usa, sustituye la vista mensual. --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <form method="GET" action="{{ route('calendar.index') }}">
@@ -92,6 +94,7 @@
         </div>
     </div>
 
+    {{-- Traducción visual de estados de pedido a badges de Bootstrap. --}}
     @php
         $statusClasses = [
             'pendiente' => 'secondary',
@@ -106,6 +109,7 @@
         ];
     @endphp
 
+    {{-- Rejilla principal: cabecera semanal y tarjetas de cada día visible. --}}
     <div class="calendar-grid">
         @foreach(['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'] as $weekday)
             <div class="calendar-weekday">{{ $weekday }}</div>
@@ -113,6 +117,7 @@
 
         @foreach($days as $day)
             @php
+                // Datos derivados de cada día para pintar estado, pedidos y resaltado.
                 $dayKey = $day->format('Y-m-d');
                 $dayOrders = $orders->get($dayKey, collect());
                 $isCurrentMonth = $day->month === $currentMonth->month;
@@ -130,6 +135,7 @@
 
                 <div class="calendar-day__body">
                     @forelse($dayOrders as $order)
+                        {{-- Tarjeta de pedido dentro del día, coloreada por estado. --}}
                         <div class="calendar-order calendar-order--{{ $order->status ?? 'pending' }}">
                             <div class="d-flex justify-content-between align-items-start gap-2 mb-1">
                                 <div class="small fw-bold">{{ $order->product->name }}</div>
@@ -166,6 +172,7 @@
         @endforeach
     </div>
 
+    {{-- Estilos propios del calendario: rejilla, tarjetas de día y pedidos. --}}
     <style>
         .calendar-grid {
             display: grid;

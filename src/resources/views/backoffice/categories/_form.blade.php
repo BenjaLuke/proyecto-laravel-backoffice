@@ -1,3 +1,4 @@
+{{-- Identificador interno visible de la categoría. --}}
 <div class="mb-3">
     <label for="code" class="form-label">Código</label>
     <input
@@ -10,6 +11,7 @@
     >
 </div>
 
+{{-- Nombre público de la categoría. --}}
 <div class="mb-3">
     <label for="name" class="form-label">Nombre</label>
     <input
@@ -22,6 +24,7 @@
     >
 </div>
 
+{{-- Relación jerárquica opcional con otra categoría. --}}
 <div class="mb-3">
     <label for="parent_id" class="form-label">Categoría padre</label>
     <select name="parent_id" id="parent_id" class="form-select">
@@ -37,6 +40,7 @@
     </select>
 </div>
 
+{{-- Descripción libre para contexto interno o API. --}}
 <div class="mb-3">
     <label for="description" class="form-label">Descripción</label>
     <textarea
@@ -47,6 +51,7 @@
     >{{ old('description', $category->description ?? '') }}</textarea>
 </div>
 
+{{-- Acciones finales del formulario. --}}
 <div class="d-flex gap-2">
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a href="{{ route('categories.index') }}" class="btn btn-secondary">Cancelar</a>

@@ -1,10 +1,12 @@
 @php
+    // Permisos actuales usados para marcar checkboxes al editar o revalidar.
     $currentPermissions = old('permissions', collect($user->getPermissions())
         ->filter()
         ->keys()
         ->toArray());
 @endphp
 
+{{-- Datos básicos de identidad del usuario. --}}
 <div class="mb-3">
     <label for="name" class="form-label">Nombre</label>
     <input
@@ -17,6 +19,7 @@
     >
 </div>
 
+{{-- Nombre de acceso al backoffice. --}}
 <div class="mb-3">
     <label for="username" class="form-label">Usuario</label>
     <input
@@ -29,6 +32,7 @@
     >
 </div>
 
+{{-- Email de contacto y login. --}}
 <div class="mb-3">
     <label for="email" class="form-label">Email</label>
     <input
@@ -41,6 +45,7 @@
     >
 </div>
 
+{{-- Los administradores saltan la comprobación granular de permisos. --}}
 <div class="form-check mb-4">
     <input
         class="form-check-input"
@@ -55,6 +60,7 @@
     </label>
 </div>
 
+{{-- Matriz de permisos agrupados por área funcional. --}}
 <div class="mb-4">
     <h2 class="h5 mb-3">Permisos</h2>
 
@@ -87,6 +93,7 @@
     </div>
 </div>
 
+{{-- Contraseña: obligatoria al crear, opcional al editar. --}}
 <div class="row g-3">
     <div class="col-md-6">
         <label for="password" class="form-label">
@@ -118,6 +125,7 @@
     </div>
 </div>
 
+{{-- Acciones finales del formulario. --}}
 <div class="d-flex gap-2 mt-4">
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>

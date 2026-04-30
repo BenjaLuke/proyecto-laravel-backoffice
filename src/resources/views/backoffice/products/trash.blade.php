@@ -3,6 +3,7 @@
 @section('title', 'Papelera de productos')
 
 @section('content')
+    {{-- Cabecera de papelera y retorno al listado activo. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-1">Papelera de productos</h1>
@@ -16,6 +17,7 @@
         </div>
     </div>
 
+    {{-- Buscador sobre productos eliminados con soft delete. --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <form method="GET" action="{{ route('products.trash') }}">
@@ -43,6 +45,7 @@
         </div>
     </div>
 
+    {{-- Tabla de productos borrados y opción de restauración. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             @if($products->count())

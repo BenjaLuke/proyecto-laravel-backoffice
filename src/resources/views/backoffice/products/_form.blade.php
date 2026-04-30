@@ -1,4 +1,5 @@
 @php
+    // Estado inicial de tarifas e imagen principal para creación, edición y duplicado.
     $oldRates = old('rates', $rates ?? []);
     $defaultPrimaryImageSource = old('primary_image_source');
 
@@ -21,6 +22,7 @@
     }
 @endphp
 
+{{-- Datos básicos del producto. --}}
 <div class="mb-3">
     <label for="code" class="form-label">Código</label>
     <input
@@ -33,6 +35,7 @@
     >
 </div>
 
+{{-- Nombre comercial visible en listados y pedidos. --}}
 <div class="mb-3">
     <label for="name" class="form-label">Nombre</label>
     <input
@@ -45,6 +48,7 @@
     >
 </div>
 
+{{-- Umbral usado para marcar stock bajo; el stock actual se mueve desde flujos específicos. --}}
 <div class="mb-3">
     <label for="min_stock" class="form-label">Stock mínimo</label>
     <input
@@ -65,6 +69,7 @@
     </div>
 </div>
 
+{{-- Categorías asociadas al producto. --}}
 <div class="mb-3">
     <label class="form-label">Categorías</label>
 
@@ -89,6 +94,7 @@
 
 <hr class="my-4">
 
+{{-- Tarifas por rango de fechas; debe existir una vigente para vender en una fecha. --}}
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="h5 mb-0">Tarifas por fechas</h2>
     <button type="button" class="btn btn-sm btn-outline-primary" id="add-rate-btn">
@@ -147,6 +153,7 @@
 
 <hr class="my-4">
 
+{{-- Imágenes heredadas cuando se crea un producto duplicado desde otro. --}}
 @if(!empty($duplicateSourceProductId) && !empty($sourceImages) && count($sourceImages))
     <input type="hidden" name="duplicate_source_product_id" value="{{ $duplicateSourceProductId }}">
 
@@ -220,6 +227,7 @@
     </div>
 @endif
 
+{{-- Subida de nuevas imágenes con vista previa en navegador. --}}
 <div class="mb-3">
     <label for="images" class="form-label">Nuevas imágenes</label>
     <input
@@ -241,6 +249,7 @@
     data-old-primary-image-source="{{ old('primary_image_source') }}"
 ></div>
 
+{{-- Imágenes ya asociadas al producto en edición. --}}
 @if(!empty($existingImages) && count($existingImages))
     <div class="mb-4">
         <h2 class="h5 mb-3">Imágenes actuales</h2>
@@ -313,6 +322,7 @@
     </div>
 @endif
 
+{{-- Descripción larga del producto. --}}
 <div class="mb-3">
     <label for="description" class="form-label">Descripción</label>
     <textarea
@@ -323,11 +333,13 @@
     >{{ old('description', $product->description ?? '') }}</textarea>
 </div>
 
+{{-- Acciones finales del formulario. --}}
 <div class="d-flex gap-2">
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancelar</a>
 </div>
 
+{{-- Plantilla usada por JavaScript para añadir nuevas tarifas dinámicamente. --}}
 <template id="rate-template">
     <div class="border rounded p-3 mb-3 rate-item">
         <div class="row g-3">
@@ -356,6 +368,7 @@
     </div>
 </template>
 
+{{-- Interacciones del formulario: tarifas dinámicas, preview de imágenes y radios de imagen principal. --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const wrapper = document.getElementById('rates-wrapper');

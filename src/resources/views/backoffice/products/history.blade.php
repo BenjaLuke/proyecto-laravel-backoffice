@@ -4,6 +4,7 @@
 
 @section('content')
     @php
+        // Etiquetas, colores y helpers para el historial visual de cambios.
         $actionLabels = [
             'created' => 'Creación',
             'updated' => 'Edición',
@@ -64,6 +65,7 @@
         }
     @endphp
 
+    {{-- Cabecera de ficha histórica y accesos relacionados. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-1">Historial del producto</h1>
@@ -101,6 +103,7 @@
     </div>
 
     @php
+        // Estado de stock mostrado en las tarjetas resumen.
         $currentStock = (int) $product->current_stock;
         $minStock = (int) $product->min_stock;
 
@@ -119,6 +122,7 @@
         }
     @endphp
 
+    {{-- Datos principales del producto. --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <div class="row g-3 align-items-start">
@@ -159,6 +163,7 @@
         </div>
     </div>
 
+    {{-- Métricas comerciales acumuladas. --}}
     <div class="row g-3 mb-4">
         <div class="col-md-6 col-xl-3">
             <div class="card shadow-sm h-100">
@@ -197,6 +202,7 @@
         </div>
     </div>
 
+    {{-- Métricas de stock y últimos eventos. --}}
     <div class="row g-3 mb-4">
         <div class="col-md-6 col-xl-3">
             <div class="card shadow-sm h-100">
@@ -274,6 +280,7 @@
 
     </div>
 
+    {{-- Historial de actividad y detalle desplegable de cambios. --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h2 class="h5 mb-3">Actividad y cambios</h2>
@@ -361,6 +368,7 @@
         </div>
     </div>
 
+    {{-- Pedidos asociados al producto y acciones sobre cada pedido. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             <h2 class="h5 mb-3">Listado de pedidos</h2>

@@ -4,6 +4,7 @@
 
 @section('content')
     @php
+        // Configuración visual y formateo para mostrar cambios archivados.
         $actionLabels = [
             'created' => 'Creación',
             'updated' => 'Edición',
@@ -48,6 +49,7 @@
         };
     @endphp
 
+    {{-- Cabecera del historial archivado de un producto concreto. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-1">Historial archivado del producto</h1>
@@ -78,6 +80,7 @@
         </div>
     </div>
 
+    {{-- Resumen del estado actual del producto y número de eventos. --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <div class="d-flex flex-wrap gap-2 align-items-center">
@@ -92,6 +95,7 @@
         </div>
     </div>
 
+    {{-- Línea temporal de eventos y detalle opcional de cambios. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             @if($activityLogs->count())

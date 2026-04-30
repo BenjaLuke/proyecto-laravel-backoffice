@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Pedidos {{ $titleLabel }}</title>
+    {{-- Estilos compatibles con DomPDF para exportar pedidos. --}}
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
@@ -49,6 +50,7 @@
     </style>
 </head>
 <body>
+    {{-- Resumen del rango exportado. --}}
     <h1>Informe de pedidos</h1>
     <div class="subtitle">{{ $titleLabel }}</div>
 
@@ -58,6 +60,7 @@
         <p><strong>Facturación total:</strong> {{ number_format($totalRevenue, 2, ',', '.') }} €</p>
     </div>
 
+    {{-- Detalle de pedidos incluidos en el informe. --}}
     <table>
         <thead>
             <tr>

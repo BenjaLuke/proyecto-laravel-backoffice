@@ -3,6 +3,7 @@
 @section('title', 'Usuarios')
 
 @section('content')
+    {{-- Cabecera del listado y acceso al alta de usuarios. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Usuarios</h1>
 
@@ -11,6 +12,7 @@
         </a>
     </div>
 
+    {{-- Tabla de usuarios con rol, permisos efectivos y acciones. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             @if($users->count())
@@ -29,6 +31,7 @@
                         </thead>
                         <tbody>
                             @foreach($users as $user)
+                                {{-- Los permisos se muestran como badges para lectura rápida. --}}
                                 @php($permissions = $user->getPermissions())
 
                                 <tr>

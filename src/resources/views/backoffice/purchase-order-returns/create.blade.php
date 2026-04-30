@@ -3,6 +3,7 @@
 @section('title', 'Nueva devolución')
 
 @section('content')
+    {{-- Alta de devolución sobre un pedido servido. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start mb-4">
@@ -18,6 +19,7 @@
                 </a>
             </div>
 
+            {{-- Resumen de unidades para evitar devolver más de lo permitido. --}}
             <div class="row g-3 mb-4">
                 <div class="col-md-4">
                     <div class="card h-100">
@@ -47,6 +49,7 @@
                 </div>
             </div>
 
+            {{-- Datos de la devolución y reparto entre stock recuperado y defectuoso. --}}
             <form action="{{ route('purchase-order-returns.store', $purchaseOrder) }}" method="POST">
                 @csrf
 
@@ -123,6 +126,7 @@
                     >{{ old('notes') }}</textarea>
                 </div>
 
+                {{-- Acciones finales del formulario. --}}
                 <div class="d-flex gap-2 mt-4">
                     <button type="submit" class="btn btn-primary">Guardar devolución</button>
                     <a href="{{ route('products.history', $purchaseOrder->product_id) }}" class="btn btn-secondary">

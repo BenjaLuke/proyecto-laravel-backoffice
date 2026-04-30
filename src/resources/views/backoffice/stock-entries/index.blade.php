@@ -3,6 +3,7 @@
 @section('title', 'Entradas de stock')
 
 @section('content')
+    {{-- Cabecera del registro de entradas de stock. --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-1">Entradas de stock</h1>
@@ -16,6 +17,7 @@
         @endif
     </div>
 
+    {{-- Filtro opcional para revisar entradas de un producto concreto. --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <form method="GET" action="{{ route('stock-entries.index') }}">
@@ -44,6 +46,7 @@
         </div>
     </div>
 
+    {{-- Tabla paginada de entradas registradas. --}}
     <div class="card shadow-sm">
         <div class="card-body">
             @if($entries->count())
