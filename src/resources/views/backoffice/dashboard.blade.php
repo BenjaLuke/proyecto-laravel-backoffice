@@ -165,15 +165,18 @@
     </div>
 
     <div class="section-title">Control interno</div>
+    
     <div class="row g-3 mb-4">
         <div class="col-md-6 col-xl-3">
             <div class="card-lift p-3 h-100">
                 <div class="d-flex justify-content-between align-items-start gap-3">
                     <div>
                         <div class="metric-label">Productos sin imágenes</div>
-                        <div class="metric-value text-warning">{{ $productsWithoutImagesCount }}</div>
+                        <div class="metric-value {{ $productsWithoutImagesCount === 0 ? 'text-success' : 'text-warning' }}">
+                            {{ $productsWithoutImagesCount }}
+                        </div>
                     </div>
-                    <span class="metric-icon icon-warning">
+                    <span class="metric-icon {{ $productsWithoutImagesCount === 0 ? 'icon-success' : 'icon-warning' }}">
                         <i class="bi bi-image"></i>
                     </span>
                 </div>
@@ -185,9 +188,11 @@
                 <div class="d-flex justify-content-between align-items-start gap-3">
                     <div>
                         <div class="metric-label">Productos sin tarifa activa</div>
-                        <div class="metric-value text-danger">{{ $productsWithoutActiveRateCount }}</div>
+                        <div class="metric-value {{ $productsWithoutActiveRateCount === 0 ? 'text-success' : 'text-warning' }}">
+                            {{ $productsWithoutActiveRateCount }}
+                        </div>
                     </div>
-                    <span class="metric-icon icon-danger">
+                    <span class="metric-icon {{ $productsWithoutActiveRateCount === 0 ? 'icon-success' : 'icon-warning' }}">
                         <i class="bi bi-exclamation-diamond"></i>
                     </span>
                 </div>
