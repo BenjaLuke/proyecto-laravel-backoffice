@@ -157,6 +157,36 @@
             box-shadow: var(--shadow-hover);
         }
 
+        .metric-link-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .metric-link-card::after {
+            content: "\F138";
+            font-family: "bootstrap-icons";
+            position: absolute;
+            right: 1rem;
+            bottom: 0.85rem;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            opacity: 0.68;
+            transition: transform 0.18s ease, opacity 0.18s ease, color 0.18s ease;
+        }
+
+        .metric-link-card:hover::after {
+            transform: translateX(3px);
+            opacity: 1;
+            color: #0d6efd;
+        }
+
+        .metric-link-card .metric-label {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 0.22rem;
+        }
+
         .metric-label {
             color: var(--text-soft);
             font-size: 0.90rem;

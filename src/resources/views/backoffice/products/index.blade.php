@@ -184,6 +184,9 @@
                             <option value="without_current" @selected(($rateStatus ?? '') === 'without_current')>
                                 Sin tarifa vigente
                             </option>
+                            <option value="expiring_soon" @selected(($rateStatus ?? '') === 'expiring_soon')>
+                                Caduca en 7 dias
+                            </option>
                         </select>
                     </div>
 

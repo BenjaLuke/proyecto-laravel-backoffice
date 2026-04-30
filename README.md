@@ -48,6 +48,14 @@ docker compose exec app php artisan test --filter=CategoryHierarchyTest
 
 ## Historial de cambios documentados
 
+### Pendiente - enlaza metricas del dashboard con listados filtrados
+
+- Convertidas en enlaces las metricas de pedidos de hoy, productos sin imagenes, productos sin tarifa activa y tarifas que caducan en 7 dias.
+- Aniadido filtro de productos para tarifas que caducan en los proximos 7 dias.
+- Diferenciadas visualmente las tarjetas clicables del dashboard.
+- Actualizado el test de raiz para comprobar la redireccion real al dashboard.
+- Aniadida cobertura del filtro de tarifas proximas a caducar.
+
 ### 7a74367 - arregla colores del dashboard
 
 - Ajustados los indicadores de control interno para que usen color verde cuando no hay incidencias.

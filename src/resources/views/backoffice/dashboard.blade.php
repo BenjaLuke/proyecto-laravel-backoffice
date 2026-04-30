@@ -7,6 +7,7 @@
         $catalogStatusClass = 'ok';
         $catalogStatusText = 'Correcto';
         $catalogStatusIcon = 'bi-check-circle-fill';
+        $today = now()->toDateString();
 
         if ($productsWithoutActiveRateCount > 0) {
             $catalogStatusClass = 'alert';
@@ -78,7 +79,11 @@
         </div>
 
         <div class="col-md-6 col-xl-3">
-            <div class="card-lift p-3 h-100">
+            @if(auth()->user()->hasPermission('calendar_view'))
+                <a href="{{ route('calendar.index', ['date_from' => $today, 'date_to' => $today]) }}" class="card-lift metric-link-card p-3 h-100 d-block text-decoration-none">
+            @else
+                <div class="card-lift p-3 h-100">
+            @endif
                 <div class="d-flex justify-content-between align-items-start gap-3">
                     <div>
                         <div class="metric-label">Pedidos hoy</div>
@@ -88,7 +93,11 @@
                         <i class="bi bi-bag-check"></i>
                     </span>
                 </div>
-            </div>
+            @if(auth()->user()->hasPermission('calendar_view'))
+                </a>
+            @else
+                </div>
+            @endif
         </div>
 
         <div class="col-md-6 col-xl-3">
@@ -168,7 +177,11 @@
     
     <div class="row g-3 mb-4">
         <div class="col-md-6 col-xl-3">
-            <div class="card-lift p-3 h-100">
+            @if(auth()->user()->hasPermission('products_view'))
+                <a href="{{ route('products.index', ['image_status' => 'without_images']) }}" class="card-lift metric-link-card p-3 h-100 d-block text-decoration-none">
+            @else
+                <div class="card-lift p-3 h-100">
+            @endif
                 <div class="d-flex justify-content-between align-items-start gap-3">
                     <div>
                         <div class="metric-label">Productos sin imágenes</div>
@@ -180,11 +193,19 @@
                         <i class="bi bi-image"></i>
                     </span>
                 </div>
-            </div>
+            @if(auth()->user()->hasPermission('products_view'))
+                </a>
+            @else
+                </div>
+            @endif
         </div>
 
         <div class="col-md-6 col-xl-3">
-            <div class="card-lift p-3 h-100">
+            @if(auth()->user()->hasPermission('products_view'))
+                <a href="{{ route('products.index', ['rate_status' => 'without_current']) }}" class="card-lift metric-link-card p-3 h-100 d-block text-decoration-none">
+            @else
+                <div class="card-lift p-3 h-100">
+            @endif
                 <div class="d-flex justify-content-between align-items-start gap-3">
                     <div>
                         <div class="metric-label">Productos sin tarifa activa</div>
@@ -196,7 +217,11 @@
                         <i class="bi bi-exclamation-diamond"></i>
                     </span>
                 </div>
-            </div>
+            @if(auth()->user()->hasPermission('products_view'))
+                </a>
+            @else
+                </div>
+            @endif
         </div>
 
         <div class="col-md-6 col-xl-3">
@@ -214,7 +239,11 @@
         </div>
 
         <div class="col-md-6 col-xl-3">
-            <div class="card-lift p-3 h-100">
+            @if(auth()->user()->hasPermission('products_view'))
+                <a href="{{ route('products.index', ['rate_status' => 'expiring_soon']) }}" class="card-lift metric-link-card p-3 h-100 d-block text-decoration-none">
+            @else
+                <div class="card-lift p-3 h-100">
+            @endif
                 <div class="d-flex justify-content-between align-items-start gap-3">
                     <div>
                         <div class="metric-label">Tarifas que caducan en 7 días</div>
@@ -224,7 +253,11 @@
                         <i class="bi bi-alarm"></i>
                     </span>
                 </div>
-            </div>
+            @if(auth()->user()->hasPermission('products_view'))
+                </a>
+            @else
+                </div>
+            @endif
         </div>
     </div>
 

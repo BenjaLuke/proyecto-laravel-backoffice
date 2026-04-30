@@ -30,6 +30,7 @@ class ProductController extends Controller
     public function index(Request $request): View
     {
         $today = now()->toDateString();
+        $nextSevenDays = now()->copy()->addDays(7)->toDateString();
 
         $categories = Category::orderBy('name')->get();
 
@@ -109,6 +110,12 @@ class ProductController extends Controller
         } elseif ($rateStatus === 'without_current') {
             $productsQuery->whereDoesntHave('rates', function ($query) use ($currentRateConstraint) {
                 $currentRateConstraint($query);
+            });
+        } elseif ($rateStatus === 'expiring_soon') {
+            $productsQuery->whereHas('rates', function ($query) use ($today, $nextSevenDays) {
+                $query->whereNotNull('end_date')
+                    ->whereDate('end_date', '>=', $today)
+                    ->whereDate('end_date', '<=', $nextSevenDays);
             });
         } elseif ($hasPriceFilter) {
             $productsQuery->whereHas('rates', function ($query) use ($currentRateConstraint, $minPrice, $maxPrice) {
@@ -763,7 +770,7 @@ class ProductController extends Controller
         $filters['min_price'] = $this->normalizeDecimalFilter($filters['min_price'] ?? '');
         $filters['max_price'] = $this->normalizeDecimalFilter($filters['max_price'] ?? '');
 
-        if (!in_array($filters['rate_status'], ['', 'with_current', 'without_current'], true)) {
+        if (!in_array($filters['rate_status'], ['', 'with_current', 'without_current', 'expiring_soon'], true)) {
             $filters['rate_status'] = '';
         }
 
@@ -836,6 +843,8 @@ class ProductController extends Controller
             $badges[] = 'Tarifa: Con tarifa vigente';
         } elseif ($filters['rate_status'] === 'without_current') {
             $badges[] = 'Tarifa: Sin tarifa vigente';
+        } elseif ($filters['rate_status'] === 'expiring_soon') {
+            $badges[] = 'Tarifa: Caduca en 7 dias';
         }
 
         if ($filters['image_status'] === 'with_images') {

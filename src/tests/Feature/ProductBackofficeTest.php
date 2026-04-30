@@ -16,6 +16,47 @@ class ProductBackofficeTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_products_can_be_filtered_by_rates_expiring_in_seven_days(): void
+    {
+        $this->travelTo('2026-04-30 12:00:00');
+
+        $user = User::factory()->create([
+            'is_admin' => true,
+            'permissions' => User::defaultPermissions(),
+        ]);
+
+        $expiringProduct = Product::factory()->create([
+            'name' => 'Tarifa a punto de caducar',
+        ]);
+
+        ProductRate::factory()->create([
+            'product_id' => $expiringProduct->id,
+            'start_date' => '2026-01-01',
+            'end_date' => '2026-05-05',
+            'price' => 10,
+        ]);
+
+        $stableProduct = Product::factory()->create([
+            'name' => 'Tarifa estable',
+        ]);
+
+        ProductRate::factory()->create([
+            'product_id' => $stableProduct->id,
+            'start_date' => '2026-01-01',
+            'end_date' => '2026-05-15',
+            'price' => 12,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('products.index', [
+            'rate_status' => 'expiring_soon',
+        ]));
+
+        $response->assertOk();
+        $response->assertSee('Tarifa a punto de caducar');
+        $response->assertDontSee('Tarifa estable');
+        $response->assertSee('Tarifa: Caduca en 7 dias');
+    }
+
     public function test_updating_product_with_new_primary_image_logs_final_image_state(): void
     {
         Storage::fake('public');
