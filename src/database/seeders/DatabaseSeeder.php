@@ -10,16 +10,25 @@ use App\Models\PurchaseOrder;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
+
+    private const PRODUCT_COUNT = 36;
 
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
+        $msxCoverFiles = $this->getMsxCoverFiles();
+        $coverIndex = 0;
+
         $adminPermissions = array_replace(User::defaultPermissions(), [
             'categories_view' => true,
             'categories_manage' => true,
@@ -91,7 +100,7 @@ class DatabaseSeeder extends Seeder
 
         $categories = $parentCategories->merge($childCategories);
 
-        Product::factory()->count(12)->create()->each(function ($product) use ($categories) {
+        Product::factory()->count(self::PRODUCT_COUNT)->create()->each(function ($product) use ($categories, $msxCoverFiles, &$coverIndex) {
             $product->categories()->attach(
                 $categories->random(rand(1, 3))->pluck('id')->toArray()
             );
@@ -100,13 +109,63 @@ class DatabaseSeeder extends Seeder
                 'product_id' => $product->id,
             ]);
 
-            ProductImage::factory()->count(rand(1, 4))->create([
-                'product_id' => $product->id,
-            ]);
+            if ($msxCoverFiles->isNotEmpty()) {
+                $this->seedRealProductImages($product, $msxCoverFiles, $coverIndex);
+            } else {
+                ProductImage::factory()->count(rand(1, 4))->create([
+                    'product_id' => $product->id,
+                ]);
+            }
 
             PurchaseOrder::factory()->count(rand(1, 5))->create([
                 'product_id' => $product->id,
             ]);
         });
+    }
+
+    private function getMsxCoverFiles(): Collection
+    {
+        $sourcePath = storage_path('app/imports/msx-covers');
+
+        if (! File::isDirectory($sourcePath)) {
+            return collect();
+        }
+
+        return collect(File::files($sourcePath))
+            ->filter(fn ($file) => in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png', 'gif', 'bmp'], true))
+            ->sortBy(fn ($file) => Str::lower($file->getFilename()))
+            ->values();
+    }
+
+    private function seedRealProductImages(Product $product, Collection $msxCoverFiles, int &$coverIndex): void
+    {
+        $imageCount = min(rand(1, 4), $msxCoverFiles->count());
+        $disk = Storage::disk('public');
+
+        for ($sortOrder = 0; $sortOrder < $imageCount; $sortOrder++) {
+            $cover = $msxCoverFiles[$coverIndex % $msxCoverFiles->count()];
+            $coverIndex++;
+
+            $extension = strtolower($cover->getExtension());
+            $basename = pathinfo($cover->getFilename(), PATHINFO_FILENAME);
+            $slug = Str::slug($basename);
+
+            if ($slug === '') {
+                $slug = 'cover-'.$product->id.'-'.$sortOrder;
+            }
+
+            $path = "products/{$product->id}/{$sortOrder}-{$slug}.{$extension}";
+
+            File::ensureDirectoryExists(dirname($disk->path($path)));
+            File::copy($cover->getRealPath(), $disk->path($path));
+
+            ProductImage::create([
+                'product_id' => $product->id,
+                'path' => $path,
+                'original_name' => $cover->getFilename(),
+                'sort_order' => $sortOrder,
+                'is_primary' => $sortOrder === 0,
+            ]);
+        }
     }
 }

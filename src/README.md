@@ -37,6 +37,27 @@ testuser / password
 
 No uses estas credenciales en produccion.
 
+## Seeder de desarrollo
+
+El seeder principal ahora:
+
+- crea 36 productos de ejemplo por ejecucion
+- mantiene categorias, tarifas y pedidos de prueba
+- usa portadas reales de MSX si encuentra archivos en `storage/app/imports/msx-covers`
+- vuelve a las imagenes ficticias solo si esa carpeta no existe o esta vacia
+
+Si quieres volver a lanzar solo el seeder:
+
+```bash
+docker compose exec app php artisan db:seed --class="Database\\Seeders\\DatabaseSeeder" --no-interaction
+```
+
+Si necesitas relanzar la importacion de portadas sobre registros ya creados:
+
+```bash
+docker compose exec app php artisan products:import-msx-covers
+```
+
 ## Comandos utiles
 
 Ejecutar tests:
